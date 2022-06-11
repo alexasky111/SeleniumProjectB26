@@ -8,46 +8,50 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class T1_iframe_CRM_AppreciationTest extends TestBase {
-
     @Test
-    public void sendingAppreciationMsg() throws InterruptedException {
+    public void sendingAppreciationMsg(){
+
 //        2- Go to: https://login2.nextbasecrm.com/
         driver.get("https://login2.nextbasecrm.com/");
-//        3- Login Homepage ( Login with valid username and
-//                password)
-        CRM_Utilities.crm_login(driver,"helpdesk1@cybertekschool.com", "UserUser" );
-//        WebElement userName = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
-//        userName.sendKeys("helpdesk1@cybertekschool.com");
+        //CRM_Utilities.crm_login(driver);
+        CRM_Utilities.crm_login(driver,"hr1@cydeo.com","UserUser");
+
+//        3- Login Homepage ( Login with valid username:helpdesk1@cybertekschool.com and password:UserUser)
+//        WebElement username = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
+//        username.sendKeys("helpdesk1@cybertekschool.com");
 //
-//        WebElement password = driver.findElement(By.name("USER_PASSWORD"));
+//        WebElement password = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
 //        password.sendKeys("UserUser");
 //
-//        WebElement logInBtn = driver.findElement(By.xpath("//input[@value='Log In']"));
-//        logInBtn.click();
+//        WebElement loginBtn = driver.findElement(By.xpath("//input[@class='login-btn']"));
+//        loginBtn.click();
+
 
 //        4- Click the MORE tab and select APPRECIATION
-        WebElement moreBtn = driver.findElement(By.xpath("//span[contains(@id,'link-text')]"));
+        WebElement moreBtn = driver.findElement(By.xpath("//span[contains(@id,'link-text')]"));// cssSelector: span[id*='link-text']
         moreBtn.click();
-        Thread.sleep(3000);
-        //cssSelector -> span[id*='link-text']
 
         WebElement appreciation = driver.findElement(By.xpath("//span[.='Appreciation']"));
         appreciation.click();
 
 //        5- Write an Appreciation message
-        //bc there is an iframe we have to switch to frame by id, any locator or Index Number-but it's not good
         driver.switchTo().frame(driver.findElement(By.cssSelector(".bx-editor-iframe")));
-        driver.findElement(By.tagName("body")).sendKeys("Hello");
-        //to proceed we have to go out of iframe and come back to default content -> main html part
-        driver.switchTo().defaultContent();
+        driver.findElement(By.tagName("body")).sendKeys("Hello!");
 
 //        6- Click the SEND button
-        driver.findElement(By.id("blog-submit-button-save")).click();
 
-//        7- Verify the Appreciation message is displayed on
-//        the feed
+        // if you have nested frame and if you want to switch 1 frame to direct parent of this frame we are using parentFrame() method
+        // driver.switchTo().parentFrame()
+        driver.switchTo().defaultContent(); // just use this method if you want to go main HTML
+        WebElement sendBtn = driver.findElement(By.id("blog-submit-button-save"));
+        sendBtn.click();
+
+//        7- Verify the Appreciation message is displayed on the feed
         WebElement feedText = driver.findElement(By.xpath("//div[starts-with(@id,'blog_post_body')]"));
-        Assert.assertEquals(feedText.getText(), "Hello!");
+        String actualText = feedText.getText();
+        String expectedText = "Hello!";
+        Assert.assertEquals(actualText,expectedText,"Feed message did not appear correctly!");
+
 
     }
 }
