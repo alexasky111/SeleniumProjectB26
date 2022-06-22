@@ -1,6 +1,8 @@
 package com.cydeo.test.extra_practice_pdf;
 
 import com.cydeo.test.base.TestBase;
+import com.cydeo.test.utilities.ConfigurationReader;
+import com.cydeo.test.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -16,7 +18,7 @@ public class T01_FindElements extends TestBase {
 //    TC #1: Checking the number of links on the page
 //1. Open Chrome browser
 //2. Go to https://www.openxcell.com
-        driver.get("https://www.openxcell.com");
+        Driver.getDriver().get(ConfigurationReader.getProperty("openxcell.url"));
 
 //3. Count the number of the links on the page and verify
 //    Expected: 332
@@ -30,7 +32,7 @@ public class T01_FindElements extends TestBase {
 //        1. Open Chrome browser
 //        2. Go to https://www.openxcell.com
 //        3. Print out all of the texts of the links on the page
-        driver.get("https://www.openxcell.com");
+        Driver.getDriver().get(ConfigurationReader.getProperty("openxcell.url"));
         List<WebElement> allLinks = driver.findElements(By.tagName("a"));
         try {
             for (WebElement eachLink : allLinks) {
@@ -49,7 +51,7 @@ public class T01_FindElements extends TestBase {
 //        2. Go to https://www.openxcell.com
 //        3. Count the number of links that does not have text and verify
 //        Expected: 109
-        driver.get("https://www.openxcell.com");
+        Driver.getDriver().get(ConfigurationReader.getProperty("openxcell.url"));
         List<WebElement> allLinks = driver.findElements(By.tagName("a"));
         int count = 0;
         try {

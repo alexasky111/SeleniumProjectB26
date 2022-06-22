@@ -1,5 +1,6 @@
 package com.cydeo.test.extra_practice_pdf.utilities;
 
+import com.cydeo.test.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +29,8 @@ public class SmartBearUtils {
         //5. Click to Login button
         WebElement login = driver.findElement(By.id("ctl00_MainContent_login_button"));
         login.click();
+
+        Driver.closeDriver();
 
     }
 }
